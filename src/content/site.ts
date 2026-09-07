@@ -369,9 +369,12 @@ export const SECAO_CONTATO = {
    * sendo construída. Regra geral de copy: nunca dar como feito o que o
    * usuário ainda não pode conferir.
    */
-  sucessoTitulo: 'Pronto. Em segundos entramos em contato.',
+  sucessoTitulo: 'Pronto. Em instantes entramos em contato.',
+  // O corpo não repete a marcação de tempo: o título já a estabeleceu.
+  // Dizer "em instantes" duas vezes em três linhas soa a texto automático —
+  // exatamente a impressão que esta tela precisa evitar.
   sucessoTexto:
-    'Estamos analisando as informações que você enviou e o contexto da sua empresa. Em instantes chamamos no WhatsApp que você informou — pode deixar o celular por perto.',
+    'Estamos analisando as informações que você enviou e o contexto da sua empresa. O contato chega no WhatsApp que você informou — pode deixar o celular por perto.',
 
   erroTexto: 'Não conseguimos enviar agora. Tente de novo ou fale com a gente pelo WhatsApp.',
 } as const
