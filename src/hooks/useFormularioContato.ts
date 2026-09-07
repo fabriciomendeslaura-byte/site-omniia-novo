@@ -30,6 +30,8 @@ export interface DadosContato {
   empresa: string
   site: string
   faturamento: string
+  /** Volume de leads por dia — junto com o faturamento, dimensiona o projeto. */
+  leads: string
   interesse: string
   mensagem: string
   /** Consentimento explícito da LGPD. Nunca pode vir marcado por padrão. */
@@ -48,6 +50,7 @@ const DADOS_VAZIOS: DadosContato = {
   empresa: '',
   site: '',
   faturamento: '',
+  leads: '',
   interesse: '',
   mensagem: '',
   consentimento: false,

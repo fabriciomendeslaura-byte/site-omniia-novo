@@ -6,6 +6,24 @@
  * ninguém sabe mais quem usa.
  */
 
+/**
+ * color-scheme: dark — a correção RAIZ dos controles nativos.
+ *
+ * Alguns elementos não são desenhados pelo CSS, e sim pelo sistema
+ * operacional: a lista de um <select>, a barra de rolagem, o seletor de data,
+ * o menu de contexto. Eles ignoram o nosso `background-color`.
+ *
+ * Esta linha avisa o navegador "esta página é escura", e ele passa a usar a
+ * versão escura de TODOS esses controles.
+ *
+ * O sintoma sem ela: o <select> abria com fundo branco e, como o texto herda
+ * a cor branca que definimos, as opções ficavam brancas sobre branco —
+ * invisíveis. Dava para consertar campo por campo; esta linha conserta a causa.
+ */
+:root {
+  color-scheme: dark;
+}
+
 body {
   background-color: var(--surface-void);
   color: var(--color-text-body);

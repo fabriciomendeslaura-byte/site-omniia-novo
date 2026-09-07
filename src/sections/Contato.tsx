@@ -2,7 +2,13 @@ import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import { useFormularioContato } from '@/hooks/useFormularioContato'
-import { FATURAMENTOS, INTERESSES, SECAO_CONTATO, linkWhatsApp } from '@/content/site'
+import {
+  FATURAMENTOS,
+  INTERESSES,
+  SECAO_CONTATO,
+  VOLUMES_LEADS,
+  linkWhatsApp,
+} from '@/content/site'
 import css from './Contato.module.css'
 
 /**
@@ -24,6 +30,10 @@ export function Contato() {
 
   // Enviado com sucesso: o formulário sai e dá lugar à confirmação. Manter o
   // formulário na tela depois do envio convida ao envio duplicado.
+  //
+  // Sem botão de WhatsApp aqui: a automação já iniciou a conversa no número
+  // informado. Mandar a pessoa "falar com a gente" seria pedir que ela
+  // procurasse um atendimento que já está esperando por ela.
   if (situacao === 'sucesso') {
     return (
       <Container as="section" id="contato" className={css.secao}>
@@ -31,9 +41,9 @@ export function Contato() {
           <span className={css.sucessoMarca}>✓</span>
           <h2 className={css.sucessoTitulo}>{SECAO_CONTATO.sucessoTitulo}</h2>
           <p className={css.sucessoTexto}>{SECAO_CONTATO.sucessoTexto}</p>
-          <Button href={linkWhatsApp()} target="_blank" variante="secundario">
-            Falar agora no WhatsApp
-          </Button>
+          {/* O remate: o visitante acabou de ser atendido pelo produto.
+              É a única prova do site que ele viveu, em vez de ler. */}
+          <p className={css.sucessoRemate}>{SECAO_CONTATO.sucessoRemate}</p>
         </div>
       </Container>
     )
@@ -227,19 +237,44 @@ export function Contato() {
               </div>
             </div>
 
-            <div className={css.campo}>
-              <label htmlFor="site" className={css.rotulo}>
-                Site ou LinkedIn <span className={css.opcional}>opcional</span>
-              </label>
-              <input
-                id="site"
-                type="text"
-                className={css.entrada}
-                value={dados.site}
-                onChange={(e) => alterar('site', e.target.value)}
-                autoComplete="url"
-                placeholder="suaempresa.com.br"
-              />
+            {/* Os dois campos de QUALIFICAÇÃO ficam juntos, na mesma linha.
+                Agrupar é intencional: a pessoa entende que ali é o bloco
+                "sobre o tamanho da operação" e responde os dois de uma vez,
+                em vez de tratar cada um como uma pergunta nova. */}
+            <div className={css.linha}>
+              <div className={css.campo}>
+                <label htmlFor="leads" className={css.rotulo}>
+                  Leads por dia <span className={css.opcional}>opcional</span>
+                </label>
+                <select
+                  id="leads"
+                  className={css.entrada}
+                  value={dados.leads}
+                  onChange={(e) => alterar('leads', e.target.value)}
+                >
+                  <option value="">Selecione</option>
+                  {VOLUMES_LEADS.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={css.campo}>
+                <label htmlFor="site" className={css.rotulo}>
+                  Site ou LinkedIn <span className={css.opcional}>opcional</span>
+                </label>
+                <input
+                  id="site"
+                  type="text"
+                  className={css.entrada}
+                  value={dados.site}
+                  onChange={(e) => alterar('site', e.target.value)}
+                  autoComplete="url"
+                  placeholder="suaempresa.com.br"
+                />
+              </div>
             </div>
 
             <div className={css.campo}>

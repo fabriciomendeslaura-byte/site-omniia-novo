@@ -344,9 +344,27 @@ export const SECAO_CONTATO = {
   garantias: ['Resposta na hora', 'Sem compromisso', 'Seus dados não são compartilhados'],
   botao: 'Quero meu diagnóstico gratuito',
   botaoEnviando: 'Enviando…',
-  sucessoTitulo: 'Recebemos sua solicitação.',
+
+  /**
+   * TELA DE SUCESSO.
+   *
+   * ⚠️ NÃO EXISTE BOTÃO DE WHATSAPP AQUI, e é de propósito.
+   * No instante em que o formulário é enviado, a automação já lê os dados,
+   * analisa o contexto e INICIA a conversa no WhatsApp da pessoa. Oferecer um
+   * botão "fale com a gente" seria pedir para ela procurar um atendimento que
+   * já está esperando por ela — atrito puro, e ainda passa a impressão de que
+   * a empresa não fez nada.
+   *
+   * O remate é o melhor argumento de venda do site inteiro: o visitante acabou
+   * de SER ATENDIDO pelo produto sem perceber que era uma demonstração.
+   * Nenhum texto convence tanto quanto a experiência que a pessoa acabou de ter.
+   */
+  sucessoTitulo: 'Pronto. Já te chamamos no WhatsApp.',
   sucessoTexto:
-    'Nossa equipe vai analisar o que você contou e retornar com o diagnóstico. Se preferir adiantar, chama no WhatsApp.',
+    'Nossa IA leu o que você enviou, analisou o contexto da sua empresa e já começou a conversa no número que você informou. É só abrir o WhatsApp e continuar por lá.',
+  sucessoRemate:
+    'E sim — isso que acabou de acontecer é exatamente o que a gente constrói para a sua empresa.',
+
   erroTexto: 'Não conseguimos enviar agora. Tente de novo ou fale com a gente pelo WhatsApp.',
 } as const
 
@@ -364,6 +382,27 @@ export const FATURAMENTOS = [
   'R$ 200 mil a R$ 500 mil/mês',
   'Acima de R$ 500 mil/mês',
   'Prefiro não informar',
+] as const
+
+/**
+ * Volume de leads por dia.
+ *
+ * Junto com o faturamento, é o par que dimensiona o projeto: volume alto pede
+ * agente atendendo em vários canais e integração pesada; volume baixo costuma
+ * se resolver com automação simples. Saber isso antes evita orçar no escuro.
+ *
+ * A opção "não acompanhamos" existe de propósito. Muita empresa realmente não
+ * mede — e sem essa saída a pessoa chuta um número, o que é pior que não ter
+ * resposta: dado inventado leva a orçamento errado. Além disso, "não medimos"
+ * é em si um sinal de venda: quem não mede costuma precisar de CRM antes de
+ * precisar de agente.
+ */
+export const VOLUMES_LEADS = [
+  'Até 10 por dia',
+  '10 a 50 por dia',
+  '50 a 100 por dia',
+  'Acima de 100 por dia',
+  'Não acompanhamos esse número',
 ] as const
 
 /** O que a pessoa procura — direciona quem atende antes da conversa. */

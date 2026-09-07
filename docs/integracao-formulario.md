@@ -21,6 +21,7 @@ que recebe é responsabilidade do Fabricio.
   "empresa": "Omni.IA",
   "site": "omniiabr.tech",
   "faturamento": "R$ 50 mil a R$ 200 mil/mês",
+  "leads": "10 a 50 por dia",
   "interesse": "Software sob medida",
   "mensagem": "Hoje a gente monta relatório na mão toda segunda...",
   "consentimento": true,
@@ -39,6 +40,7 @@ que recebe é responsabilidade do Fabricio.
 | `empresa` | string | ✅ | mínimo 2 caracteres |
 | `site` | string | ❌ | pode vir string vazia `""` |
 | `faturamento` | string | ❌ | uma das faixas fixas, ou `""` |
+| `leads` | string | ❌ | volume de leads por dia — uma das faixas fixas, ou `""` |
 | `interesse` | string | ✅ | uma das opções fixas |
 | `mensagem` | string | ✅ | 10 a 2000 caracteres |
 | `consentimento` | boolean | ✅ | **sempre `true`** — sem ele o envio nem acontece |
@@ -68,6 +70,20 @@ R$ 200 mil a R$ 500 mil/mês
 Acima de R$ 500 mil/mês
 Prefiro não informar
 ```
+
+**`leads`** — um destes, ou vazio:
+```
+Até 10 por dia
+10 a 50 por dia
+50 a 100 por dia
+Acima de 100 por dia
+Não acompanhamos esse número
+```
+
+> 💡 **`faturamento` + `leads` são o par que dimensiona o projeto.** Volume alto pede
+> agente em vários canais e integração pesada; volume baixo costuma se resolver com
+> automação simples. E `"Não acompanhamos esse número"` é em si um sinal de venda:
+> quem não mede geralmente precisa de CRM antes de precisar de agente.
 
 ---
 

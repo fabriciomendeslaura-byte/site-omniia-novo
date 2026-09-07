@@ -165,6 +165,27 @@
   color: var(--color-text-faint);
 }
 
+/**
+ * As opções do <select>.
+ *
+ * `color-scheme: dark` (em global.css) já resolve na maioria dos navegadores.
+ * Isto aqui é a segunda camada: alguns navegadores no Windows continuam
+ * pintando a lista com o fundo do sistema, e sem cor explícita o texto some.
+ *
+ * Definir as duas cores garante contraste em qualquer combinação de
+ * navegador e sistema — inclusive quando o usuário está em tema claro.
+ */
+.entrada option {
+  background-color: var(--surface-obsidian);
+  color: var(--color-text-body);
+}
+
+/* A opção vazia ("Selecione") fica apagada dentro da lista, como um
+   placeholder — separa visualmente "nada escolhido" das opções reais. */
+.entrada option[value=''] {
+  color: var(--color-text-faint);
+}
+
 .entrada:hover {
   border-color: rgba(255, 255, 255, 0.14);
 }
@@ -289,6 +310,25 @@
   font-size: 15px;
   line-height: 1.65;
   color: var(--color-text-muted);
+}
+
+/**
+ * O remate.
+ *
+ * Separado por uma linha e um respiro maior: é uma virada de assunto, não a
+ * continuação do parágrafo. A pausa faz o leitor processar o que acabou de
+ * acontecer com ele antes de ler a frase.
+ */
+.sucessoRemate {
+  margin-top: var(--spacing-12);
+  padding-top: var(--spacing-20);
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+  max-width: 42ch;
+
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-body);
 }
 
 /* ============================================================
