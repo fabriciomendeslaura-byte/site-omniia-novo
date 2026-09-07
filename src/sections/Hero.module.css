@@ -1,0 +1,268 @@
+/**
+ * Primeira tela.
+ *
+ * O fundo é montado em três camadas sobrepostas, todas em CSS puro — nenhuma
+ * imagem, nenhum arquivo para baixar:
+ *   1. grade  → linhas finíssimas, textura de "ambiente técnico"
+ *   2. luz    → o brilho que segue o cursor
+ *   3. chão   → o degradê atmosférico embaixo
+ */
+
+.hero {
+  position: relative;
+  /* isolation cria um contexto de empilhamento próprio: garante que as camadas
+     de fundo fiquem contidas aqui e não briguem de z-index com o resto do site. */
+  isolation: isolate;
+  overflow: hidden;
+
+  /* Reserva a altura da barra fixa — sem isso o título nasce embaixo dela.
+     Vem do token para não existir "68" escrito solto em dois arquivos: mudar
+     a barra passa a ajustar o hero sozinho. */
+  padding-top: calc(var(--altura-nav) + clamp(var(--spacing-56), 9vw, var(--spacing-128)));
+  padding-bottom: clamp(var(--spacing-64), 10vw, var(--spacing-128));
+}
+
+/**
+ * CAMADA 1 — a grade base.
+ *
+ * Dois gradientes repetidos formam as linhas vertical e horizontal. A máscara
+ * apaga as bordas, para a grade não terminar num corte seco: ela "nasce" no
+ * topo e some suavemente para baixo.
+ *
+ * A opacidade (0.055) é o teto do que dá para subir sem a grade competir com
+ * o texto. Acima disso, as linhas passam a atravessar o título e a leitura cai.
+ */
+.grade {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 64px 64px;
+
+  mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, #000 45%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, #000 45%, transparent 100%);
+}
+
+/**
+ * CAMADA 2 — a grade que ACENDE sob o cursor.
+ *
+ * É a mesma grade, quatro vezes mais forte, mas recortada por uma máscara
+ * circular que segue o mouse. Fora do círculo, ela simplesmente não existe.
+ *
+ * COMO A MÁSCARA FUNCIONA
+ * `mask-image` usa a opacidade da imagem como "molde": onde o gradiente é
+ * opaco, o elemento aparece; onde é transparente, some. Como o centro do
+ * gradiente é `var(--mouse-x)`, o recorte anda junto com o cursor.
+ *
+ * O truque é que a grade forte JÁ ESTÁ desenhada o tempo todo — a máscara só
+ * escolhe o pedaço visível. Por isso o efeito é instantâneo e não custa nada:
+ * não há nada sendo criado ou recalculado quando o mouse se move.
+ */
+.gradeIluminada {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(to right, rgba(120, 175, 255, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120, 175, 255, 0.22) 1px, transparent 1px);
+  background-size: 64px 64px;
+
+  /* O círculo de revelação. Sem cursor na área (celular, ou antes do primeiro
+     movimento), o fallback -100% joga a máscara para fora da tela e o efeito
+     fica invisível — em vez de acender um ponto solto no meio do nada. */
+  mask-image: radial-gradient(
+    260px circle at var(--mouse-x, -100%) var(--mouse-y, -100%),
+    #000 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    transparent 75%
+  );
+  -webkit-mask-image: radial-gradient(
+    260px circle at var(--mouse-x, -100%) var(--mouse-y, -100%),
+    #000 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    transparent 75%
+  );
+}
+
+/**
+ * CAMADA 3 — o brilho azul difuso do cursor.
+ *
+ * `--mouse-x` e `--mouse-y` são escritas pelo hook `usePonteiroLuz`.
+ * O fallback `50% / 30%` deixa um brilho suave no centro antes de o mouse se
+ * mexer — e no celular, onde o hook nem chega a rodar, é o que dá atmosfera.
+ *
+ * São DOIS gradientes sobrepostos, e não um só:
+ *   • o núcleo (340px) concentra a luz e dá o ponto quente;
+ *   • o halo (620px) espalha de leve e evita a borda dura do círculo.
+ * Luz real tem os dois — um gradiente sozinho parece um adesivo redondo.
+ */
+.luz {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none; /* a luz não pode roubar cliques do conteúdo */
+
+  background:
+    radial-gradient(
+      340px circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
+      rgba(43, 127, 255, 0.16),
+      transparent 70%
+    ),
+    radial-gradient(
+      620px circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
+      rgba(43, 127, 255, 0.08),
+      transparent 65%
+    );
+}
+
+/**
+ * CAMADA 3 — o chão.
+ *
+ * O design system permite gradiente em UM lugar só: este. É o que dá a
+ * sensação de que o conteúdo flutua sobre alguma coisa, em vez de estar colado
+ * num retângulo preto.
+ */
+.chao {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 40%;
+  z-index: -2;
+  background: linear-gradient(to top, rgba(208, 214, 224, 0.05), transparent);
+}
+
+.conteudo {
+  display: grid;
+  /* minmax(0, 1fr) em vez de 1fr: sem o mínimo zero, um conteúdo largo (o
+     código) força a coluna a crescer e estoura a grade. Erro clássico de CSS Grid. */
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(var(--spacing-40), 6vw, var(--spacing-64));
+  align-items: center;
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+
+/* ============================================================
+   ETIQUETA
+   ============================================================ */
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  align-self: flex-start;
+
+  padding: 5px var(--spacing-12);
+  border-radius: var(--radius-pills);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  background-color: rgba(255, 255, 255, 0.02);
+
+  font-size: 12px;
+  color: var(--color-text-muted);
+  letter-spacing: -0.01em;
+}
+
+.pontoEtiqueta {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-pills);
+  background-color: var(--color-action);
+}
+
+/* ============================================================
+   TÍTULO
+   ============================================================ */
+
+.titulo {
+  display: flex;
+  flex-direction: column;
+
+  /* clamp deixa o título fluido entre celular e desktop sem media query.
+     O 5.2vw do meio é o que faz a fonte acompanhar a largura da tela. */
+  font-size: clamp(38px, 5.2vw, 64px);
+  /* Peso 510, nunca 700: o sistema não usa negrito. A força vem do tamanho. */
+  font-weight: var(--font-weight-w510);
+  line-height: 1.03;
+  /* O tracking negativo é obrigatório acima de 48px — é o que dá o ar caro. */
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+}
+
+.tituloLinha {
+  color: var(--color-text-primary);
+}
+
+/* A última linha vem em cinza claro, não na cor de ação: se o título fosse
+   colorido, competiria com o botão e a "lanterna" perderia a função. */
+.tituloDestaque {
+  color: var(--color-text-muted);
+}
+
+.subtitulo {
+  max-width: 52ch; /* ~52 caracteres por linha: a faixa mais confortável de leitura */
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   AÇÕES
+   ============================================================ */
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-12);
+}
+
+.garantias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8) var(--spacing-20);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.garantia {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-size: 13px;
+  color: var(--color-text-faint);
+}
+
+/* O "✓" entra por CSS porque é decoração, não conteúdo: não deve ser lido em
+   voz alta nem copiado junto com o texto. */
+.garantia::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-pills);
+  background-color: var(--color-smoke);
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 980px) {
+  .conteudo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-48);
+  }
+
+  /* No celular o painel de código vem depois do texto — a mensagem primeiro,
+     a demonstração depois. */
+  .colunaPainel {
+    order: 2;
+  }
+}

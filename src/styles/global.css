@@ -1,0 +1,76 @@
+/**
+ * Estilos globais — aplica os tokens ao documento.
+ *
+ * Aqui só entra o que vale para a PÁGINA INTEIRA. Estilo de componente mora no
+ * `.module.css` do próprio componente, para não virar um arquivo gigante que
+ * ninguém sabe mais quem usa.
+ */
+
+body {
+  background-color: var(--surface-void);
+  color: var(--color-text-body);
+
+  font-family: var(--font-inter-variable);
+  font-size: 16px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+
+  /* Estas variantes de glifo são a assinatura tipográfica do sistema:
+     'cv01' muda o desenho do "a", 'ss03' ajusta o "@" e 'zero' corta o zero.
+     É um detalhe minúsculo que separa "usou Inter" de "usou Inter direito". */
+  font-feature-settings: 'cv01' on, 'ss03' on, 'zero' on;
+}
+
+/**
+ * SELEÇÃO DE TEXTO
+ * A cor de ação é a única cromática do site — então quando o usuário seleciona
+ * um texto, é ela que aparece. Coerência: a mesma cor que significa "aqui" no
+ * botão significa "aqui" na seleção.
+ */
+::selection {
+  background-color: var(--color-action);
+  color: var(--color-action-fg);
+}
+
+/**
+ * FOCO POR TECLADO
+ * `:focus-visible` só desenha o anel quando a navegação é por Tab — clique de
+ * mouse não mostra. É o melhor dos dois mundos: acessível para quem usa teclado,
+ * limpo para quem usa mouse.
+ *
+ * Nunca usar `outline: none` sem colocar outra indicação no lugar: quem navega
+ * por teclado perde completamente a noção de onde está.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/**
+ * BARRA DE ROLAGEM
+ * A barra padrão do Windows é clara e corta o canvas escuro com uma faixa
+ * branca. Escurecer é o tipo de detalhe que ninguém elogia, mas todo mundo
+ * percebe quando falta.
+ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-graphite) var(--surface-void);
+}
+
+/**
+ * CLASSE UTILITÁRIA: conteúdo só para leitor de tela.
+ * Some visualmente, mas continua sendo lido em voz alta. Usada em rótulos que
+ * o vidente entende pelo ícone e o cego não.
+ */
+.apenasLeitorDeTela {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

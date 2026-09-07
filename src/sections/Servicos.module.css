@@ -1,0 +1,210 @@
+/**
+ * Seção de serviços — seis blocos alternando texto e visual.
+ */
+
+.secao {
+  /* O ritmo de 96px entre seções é o que dá o ar caro: espaço em branco é a
+     coisa mais cara de um layout, porque exige abrir mão de conteúdo. */
+  padding-block: clamp(var(--spacing-64), 10vw, var(--spacing-128));
+}
+
+/* ============================================================
+   CABEÇALHO DA SEÇÃO
+   ============================================================ */
+
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  max-width: 68ch;
+  margin-bottom: clamp(var(--spacing-48), 7vw, var(--spacing-96));
+}
+
+.etiqueta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+
+  /* Monoespaçada, no formato de comentário de código: é a assinatura visual
+     de "quem fez isso programa" aparecendo em cada seção. */
+  font-family: var(--font-berkeley-mono);
+  font-size: 12px;
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+}
+
+.etiquetaBarra {
+  color: var(--color-action);
+  opacity: 0.7;
+}
+
+.titulo {
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: var(--font-weight-w510);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+}
+
+/* A segunda metade do título em cinza: cria hierarquia dentro da própria
+   frase sem gastar a cor de ação, que é reservada ao botão. */
+.tituloDestaque {
+  color: var(--color-text-muted);
+}
+
+.descricao {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 58ch;
+}
+
+/* ============================================================
+   OS BLOCOS
+   ============================================================ */
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(var(--spacing-64), 9vw, var(--spacing-128));
+}
+
+.bloco {
+  display: grid;
+  /* minmax(0, 1fr): sem o mínimo zero, um conteúdo largo força a coluna a
+     crescer e estoura a grade. É o erro mais comum de CSS Grid. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(var(--spacing-32), 5vw, var(--spacing-64));
+  align-items: center;
+}
+
+/**
+ * Bloco invertido: o visual vai para a esquerda e o texto para a direita.
+ *
+ * Feito com `order` e não trocando a ordem no HTML — assim a leitura do
+ * documento continua sendo sempre "título, depois ilustração", que é a ordem
+ * correta para leitor de tela e para o Google. O visual muda; a semântica não.
+ */
+.blocoInvertido .colunaTexto {
+  order: 2;
+}
+
+.blocoInvertido .colunaVisual {
+  order: 1;
+}
+
+.colunaTexto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* ============================================================
+   NUMERAÇÃO — o "design de código"
+   ============================================================ */
+
+.numeroLinha {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.numero {
+  font-family: var(--font-berkeley-mono);
+  font-size: 12px;
+  letter-spacing: -0.013em;
+  color: var(--color-action);
+}
+
+/* Traço curto entre o número e o rótulo. Detalhe pequeno que faz a linha
+   parecer desenhada, e não apenas escrita. */
+.tracoNumero {
+  width: 24px;
+  height: 1px;
+  background-color: var(--color-border-strong);
+}
+
+.rotulo {
+  font-family: var(--font-berkeley-mono);
+  font-size: 12px;
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+  text-transform: lowercase;
+}
+
+/* ============================================================
+   TEXTO DO SERVIÇO
+   ============================================================ */
+
+.chamada {
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: var(--font-weight-w510);
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+  max-width: 20ch;
+}
+
+.descricaoServico {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+  max-width: 46ch;
+}
+
+.itens {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  margin: var(--spacing-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+  padding-inline-start: var(--spacing-20);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-text-body);
+}
+
+/**
+ * O marcador da lista.
+ *
+ * Feito com `::before` porque é DECORAÇÃO: não deve ser lido em voz alta pelo
+ * leitor de tela nem copiado junto quando alguém seleciona o texto. Marcador
+ * digitado no conteúdo ("• item") seria lido e copiado.
+ */
+.item::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 1px;
+  background-color: var(--color-action);
+  opacity: 0.6;
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .bloco {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-32);
+  }
+
+  /* No celular a ordem visual volta a ser sempre texto → visual. Inverter
+     em coluna única só embaralharia a leitura, sem ganho nenhum. */
+  .blocoInvertido .colunaTexto,
+  .blocoInvertido .colunaVisual {
+    order: initial;
+  }
+
+  .chamada {
+    max-width: none;
+  }
+}

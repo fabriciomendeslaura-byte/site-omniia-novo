@@ -1,0 +1,314 @@
+/**
+ * Contato — texto à esquerda, formulário à direita.
+ */
+
+.secao {
+  padding-block: clamp(var(--spacing-64), 10vw, var(--spacing-128));
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(var(--spacing-40), 6vw, var(--spacing-80));
+  align-items: start;
+}
+
+/* ============================================================
+   COLUNA DE TEXTO
+   ============================================================ */
+
+.colunaTexto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  /* Acompanha a rolagem no desktop: o argumento fica visível enquanto a
+     pessoa preenche os campos. */
+  position: sticky;
+  top: calc(var(--altura-nav) + var(--spacing-32));
+}
+
+.etiqueta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-berkeley-mono);
+  font-size: 12px;
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+}
+
+.etiquetaBarra {
+  color: var(--color-action);
+  opacity: 0.7;
+}
+
+.titulo {
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: var(--font-weight-w510);
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+}
+
+.tituloDestaque {
+  color: var(--color-text-muted);
+}
+
+.descricao {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+  max-width: 46ch;
+}
+
+.garantias {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  margin: var(--spacing-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.garantia {
+  position: relative;
+  padding-inline-start: var(--spacing-20);
+  font-size: 14px;
+  color: var(--color-text-body);
+}
+
+.garantia::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 1px;
+  background-color: var(--color-action);
+  opacity: 0.6;
+}
+
+/* ============================================================
+   FORMULÁRIO
+   ============================================================ */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+
+  padding: clamp(var(--spacing-24), 3vw, var(--spacing-40));
+  border-radius: var(--radius-cards);
+  background-color: var(--surface-carbon);
+  box-shadow: var(--shadow-subtle);
+}
+
+/**
+ * A armadilha (honeypot).
+ *
+ * Escondida com posicionamento, e NÃO com `display: none` ou `hidden`: robô de
+ * spam moderno ignora campo escondido dessa forma. Fora da tela, ele acha o
+ * campo no HTML, preenche, e se entrega.
+ */
+.armadilha {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Duas colunas nas linhas que comportam. */
+.linha {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-16);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+.rotulo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-size: 13px;
+  color: var(--color-text-body);
+}
+
+.opcional {
+  font-family: var(--font-berkeley-mono);
+  font-size: 10.5px;
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+}
+
+.entrada {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-inputs);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.02);
+  color: var(--color-text-primary);
+  font-size: 14px;
+
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.entrada::placeholder {
+  color: var(--color-text-faint);
+}
+
+.entrada:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* No foco a borda clareia — o anel global de foco continua valendo para quem
+   navega por teclado, e isto aqui dá o retorno visual de "estou aqui". */
+.entrada:focus {
+  outline: none;
+  border-color: var(--color-text-muted);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Campo com erro fica com a borda avermelhada — MAS a mensagem de texto
+   embaixo é o que informa de fato. Cor sozinha exclui quem não a distingue. */
+.entrada[aria-invalid='true'] {
+  border-color: rgba(235, 87, 87, 0.6);
+}
+
+.area {
+  resize: vertical;
+  min-height: 108px;
+  line-height: 1.6;
+  font-family: inherit;
+}
+
+.erro {
+  font-size: 12.5px;
+  color: var(--color-coral-red);
+}
+
+/* ============================================================
+   CONSENTIMENTO (LGPD)
+   ============================================================ */
+
+.consentimento {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding-top: var(--spacing-4);
+}
+
+.caixaRotulo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+  cursor: pointer;
+
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+
+.caixa {
+  /* accent-color pinta o check nativo com a cor da marca, sem precisar
+     recriar a caixa do zero — e mantém todo o comportamento de acessibilidade
+     que o navegador já entrega de graça. */
+  accent-color: var(--color-action);
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.link {
+  color: var(--color-text-body);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--color-action);
+}
+
+.avisoErro {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--color-coral-red);
+}
+
+/* ============================================================
+   SUCESSO
+   ============================================================ */
+
+.sucesso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-16);
+
+  max-width: 52ch;
+  margin-inline: auto;
+  padding: clamp(var(--spacing-40), 6vw, var(--spacing-80)) var(--spacing-24);
+
+  border-radius: var(--radius-cards);
+  background-color: var(--surface-carbon);
+  box-shadow: var(--shadow-subtle);
+}
+
+.sucessoMarca {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pills);
+  background-color: rgba(43, 127, 255, 0.12);
+  box-shadow: inset 0 0 0 1px var(--color-action);
+  color: var(--color-action);
+  font-size: 20px;
+}
+
+.sucessoTitulo {
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: var(--font-weight-w510);
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+}
+
+.sucessoTexto {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .grade {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-40);
+  }
+
+  /* Sticky em coluna única prenderia o texto por cima do formulário. */
+  .colunaTexto {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .linha {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

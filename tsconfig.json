@@ -1,0 +1,42 @@
+{
+  // Configuração do TypeScript. O objetivo aqui é ser ESTRITO:
+  // é o compilador que pega o erro antes do usuário pegar.
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Resolução no padrão de bundler (o Vite resolve os imports, não o tsc) */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Rigor: nada de `any` implícito, nada de variável esquecida.
+       `noUncheckedIndexedAccess` obriga a tratar o caso "não existe"
+       ao acessar array por índice — evita o clássico undefined em produção. */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* Atalho de import: `@/components/...` em vez de `../../components/...`.
+       Caminho relativo longo quebra sempre que um arquivo muda de pasta.
+
+       O "./" na frente é obrigatório a partir do TypeScript 7: a opção
+       `baseUrl` foi removida, e agora os caminhos são resolvidos a partir
+       do próprio tsconfig.json. */
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
+}

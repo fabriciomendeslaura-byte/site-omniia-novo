@@ -1,0 +1,41 @@
+/**
+ * Animação de entrada do Reveal.
+ *
+ * Só duas propriedades são animadas: `opacity` e `transform`.
+ * Isso é regra de ouro de performance em animação web — essas duas o navegador
+ * resolve na placa de vídeo, sem recalcular o layout da página. Animar `top`,
+ * `height` ou `margin` obriga o navegador a remedir tudo a cada quadro e
+ * derruba o site para 20 quadros por segundo.
+ */
+
+.base {
+  opacity: 0;
+  /* 18px é deliberado: o suficiente para o olho perceber a chegada, pouco o
+     bastante para não parecer que o bloco "voou" para o lugar. */
+  transform: translate3d(0, 18px, 0);
+
+  transition:
+    opacity var(--duration-slow) var(--ease-out) var(--atraso, 0ms),
+    transform var(--duration-slow) var(--ease-out) var(--atraso, 0ms);
+
+  /* will-change avisa o navegador para já preparar a camada de composição
+     deste elemento. Usar com parcimônia: em excesso, consome memória de vídeo. */
+  will-change: opacity, transform;
+}
+
+.visivel {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  /* Terminou de animar? Devolve a otimização. Manter `will-change` para sempre
+     é pior do que nunca ter usado. */
+  will-change: auto;
+}
+
+/* Quem pediu menos movimento recebe o conteúdo parado, sem deslize. */
+@media (prefers-reduced-motion: reduce) {
+  .base {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

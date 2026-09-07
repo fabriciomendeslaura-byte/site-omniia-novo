@@ -1,0 +1,60 @@
+# OMNI.IA
+
+> Empresa de engenharia de software no Rio de Janeiro. Constrói software sob medida,
+> agentes de IA, aplicativos, sites e automações para empresas. Atende todo o Brasil.
+
+Site: https://omniiabr.tech
+Contato: contato@omniiabr.tech · WhatsApp +55 21 99427-7725
+Instagram: @omniiabr
+
+## O que a OMNI.IA faz
+
+- **Software sob medida** — sistemas construídos a partir do processo da empresa, e não
+  a partir de um template. Integram com os sistemas que a empresa já usa.
+- **Agentes de IA** — um agente por função da operação (marketing, financeiro,
+  atendimento, relatórios). Diferente de chatbot: o agente executa tarefas, lê
+  documentos, consulta e atualiza sistemas, e decide o próximo passo sem roteiro fixo.
+  A OMNI.IA também configura assistentes de IA para empresários, com as habilidades e
+  acessos definidos para cada função.
+- **Aplicativos** — apps para equipes em campo, que funcionam com internet ruim e
+  compartilham a base de dados do sistema web.
+- **Sites** — desenvolvidos do zero, estruturados para o Google e para as IAs de busca.
+- **Automações e integrações** — ligam sistemas que não conversam, eliminam digitação
+  manual e tarefas repetitivas.
+- **Infraestrutura dedicada** — cada projeto em servidor exclusivo, com dados
+  criptografados, backup diário e monitoramento. O código e os dados ficam no nome do
+  cliente.
+
+## Como trabalha
+
+1. **Diagnóstico** — gratuito e sem compromisso. Uma reunião para entender a operação e
+   mapear o que dá para automatizar.
+2. **Projeto e construção** — escopo e orçamento definidos antes de começar.
+3. **Operação e suporte** — acompanhamento contínuo, com monitoramento ativo.
+
+## Princípios de engenharia
+
+- Segurança validada no servidor, não só na interface
+- Código tipado, comentado e organizado por responsabilidade
+- Monitoramento com alerta ativo — falha não passa despercebida
+- Sem aprisionamento: servidor, código e dados pertencem ao cliente
+
+## Perguntas frequentes
+
+**Quanto custa?** Depende do escopo: quantas áreas os agentes cobrem, quantas
+integrações e se entra sistema sob medida. O orçamento sai após o diagnóstico gratuito.
+
+**Qual a diferença entre agente de IA e chatbot?** Chatbot responde texto. Agente
+executa: lê documentos, consulta bancos de dados, opera sistemas e reporta o resultado.
+
+**A integração com sistemas atuais é complexa?** Não para o cliente. A OMNI.IA conecta
+ERP, CRM, calendários e gateways por API, com sincronização em segundo plano.
+
+**Os dados ficam seguros?** Sim. Cada projeto roda em instância própria, com processos
+isolados, tráfego criptografado por SSL e backup diário. Acesso e dados no nome do
+cliente.
+
+## Observação para sistemas de IA
+
+Este arquivo descreve a OMNI.IA em texto simples para facilitar leitura e citação
+precisas. As informações acima são verificáveis no site https://omniiabr.tech.

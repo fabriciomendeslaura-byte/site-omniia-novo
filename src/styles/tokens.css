@@ -1,0 +1,188 @@
+:root {
+  /* Colors */
+  --color-void: #08090a;
+  --color-carbon: #0f1011;
+  --color-obsidian: #161718;
+  --color-graphite: #23252a;
+  --color-smoke: #383b3f;
+  --color-ash: #62666d;
+  --color-fog: #8a8f98;
+  --color-mist: #d0d6e0;
+  --color-bone: #e5e5e6;
+  --color-paper: #ffffff;
+  --color-acid-lime: #e4f222;
+  --color-pulse-green: #27a644;
+  --color-coral-red: #eb5757;
+  --color-signal-teal: #02b8cc;
+  --color-iris-violet: #6366f1;
+  --color-lavender: #8b5cf6;
+
+  /* Typography — Font Families */
+  --font-inter-variable: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-berkeley-mono: 'Berkeley Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Typography — Scale */
+  --text-caption: 13px;
+  --leading-caption: 1.2;
+  --text-body-sm: 15px;
+  --leading-body-sm: 1.6;
+  --tracking-body-sm: -0.165px;
+  --text-body-lg: 20px;
+  --leading-body-lg: 1.33;
+  --tracking-body-lg: -0.24px;
+  --text-subheading: 24px;
+  --leading-subheading: 1.33;
+  --tracking-subheading: -0.288px;
+  --text-heading-sm: 32px;
+  --leading-heading-sm: 1.13;
+  --tracking-heading-sm: -0.704px;
+  --text-heading: 48px;
+  --leading-heading: 1;
+  --tracking-heading: -1.056px;
+  --text-heading-lg: 64px;
+  --leading-heading-lg: 1;
+  --tracking-heading-lg: -1.408px;
+  --text-display: 72px;
+  --leading-display: 1;
+  --tracking-display: -1.584px;
+
+  /* Typography — Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-w510: 510;
+  --font-weight-w590: 590;
+
+  /* Spacing */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-128: 128px;
+
+  /* Layout */
+  --page-max-width: 1200px;
+  --section-gap: 96px;
+  --card-padding: 24px;
+  --element-gap: 8px;
+
+  /* Border Radius */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-2xl-2: 22px;
+  --radius-full: 400px;
+  --radius-full-2: 9999px;
+
+  /* Named Radii */
+  --radius-cards: 12px;
+  --radius-pills: 9999px;
+  --radius-small: 2px;
+  --radius-badges: 4px;
+  --radius-inputs: 6px;
+  --radius-buttons: 6px;
+
+  /* Shadows */
+  --shadow-sm: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px;
+  --shadow-md: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px inset;
+  --shadow-subtle: rgb(35, 37, 42) 0px 0px 0px 1px inset;
+  --shadow-subtle-2: rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
+  --shadow-subtle-3: rgba(0, 0, 0, 0.01) 0px 5px 2px 0px, rgba(0, 0, 0, 0.04) 0px 3px 2px 0px, rgba(0, 0, 0, 0.07) 0px 1px 1px 0px, rgba(0, 0, 0, 0.08) 0px 0px 1px 0px;
+  --shadow-xl: rgba(8, 9, 10, 0.6) 0px 4px 32px 0px;
+  --shadow-subtle-4: rgba(255, 255, 255, 0.03) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.04) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.6) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 4px 0px;
+  --shadow-subtle-5: rgba(0, 0, 0, 0.1) 0px 0px 0px 2px;
+
+  /* Surfaces */
+  --surface-void: #08090a;
+  --surface-carbon: #0f1011;
+  --surface-obsidian: #161718;
+  --surface-slate: #23252a;
+
+  /* ============================================================
+     CAMADA OMNI.IA — decidido em 07/09/2026
+     ============================================================
+     Tudo acima é PRIMITIVO: o nome diz a COR (--color-acid-lime).
+     Tudo abaixo é SEMÂNTICO: o nome diz a FUNÇÃO (--color-action).
+
+     Por que duas camadas: o componente usa só o semântico. Se um dia
+     a marca mudar de cor, troca-se UMA linha aqui e o site inteiro
+     acompanha — nenhum componente precisa ser tocado.
+     ============================================================ */
+
+  /* Cor da marca — a mesma da engrenagem da logo. Institucional:
+     vive no logo, em material impresso e nas redes. NÃO usar em botão:
+     contra o fundo #08090a ela dá só 2,45:1 de contraste (some no escuro). */
+  --color-brand: #004AAD;
+
+  /* Cor de ação — o azul da marca clareado até brilhar sobre o preto.
+     5,30:1 contra o canvas: mais que o dobro do #004AAD.
+     Regra herdada do design system: UM elemento com esta cor por tela. */
+  --color-action: #2B7FFF;
+
+  /* Texto DENTRO do botão de ação. Escuro, não branco:
+     branco sobre #2B7FFF dá 3,76:1 e reprova no WCAG AA (mínimo 4,5:1);
+     o quase-preto dá 5,30:1 e passa. */
+  --color-action-fg: #08090a;
+
+  /* Papéis de texto — evita decidir "qual cinza" a cada componente */
+  --color-text-primary: #ffffff;    /* títulos, ênfase máxima */
+  --color-text-body: #d0d6e0;       /* texto corrido */
+  --color-text-muted: #8a8f98;      /* apoio, legenda, placeholder */
+  --color-text-faint: #62666d;      /* metadado, item inativo */
+
+  /* Bordas — no lugar de sombra, é assim que a elevação acontece aqui */
+  --color-border: #23252a;          /* padrão, quase imperceptível */
+  --color-border-strong: #383b3f;   /* separador de seção */
+
+  /* Altura da barra de navegação e da logo dentro dela.
+     Moram aqui porque mais de um lugar precisa saber: a barra, a logo e o
+     Hero, que reserva esse espaço no topo para o título não nascer embaixo
+     dela. Com o valor espalhado, mudar a altura quebraria o alinhamento e
+     ninguém lembraria do segundo lugar. Um dado, um lugar (SSOT).
+
+     Valores de CELULAR. O bloco no fim deste arquivo aumenta os dois no
+     desktop — a logo é vertical (símbolo + texto), então precisa de altura
+     para o "TECNOLOGIA" continuar legível, e no celular não há espaço. */
+  --altura-nav: 72px;
+  --altura-logo: 48px;
+
+  /* Movimento — camada nossa; o sistema original não define motion.
+     A curva desacelera no fim: o elemento "chega" em vez de "parar". */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 200ms;
+  --duration-base: 400ms;
+  --duration-slow: 600ms;
+  --stagger: 70ms;                  /* atraso entre itens que entram em sequência */
+}
+
+/**
+ * DESKTOP — a partir de 861px.
+ *
+ * Por que só a logo e a barra crescem, e não uma escala geral:
+ * a logo da OMNI.IA é VERTICAL (símbolo em cima, "OMNI.IA / TECNOLOGIA"
+ * embaixo). A altura total é dividida entre as duas partes, então ela precisa
+ * de bem mais altura que uma logo horizontal para o texto continuar legível.
+ * No celular esse espaço não existe — por isso o valor é diferente.
+ *
+ * Note que só REDEFINIMOS a variável: nenhum componente é tocado. Todo mundo
+ * que usa `var(--altura-logo)` acompanha sozinho. É a vantagem prática de
+ * tokens semânticos — o valor muda num lugar, o site inteiro obedece.
+ */
+@media (min-width: 861px) {
+  :root {
+    --altura-nav: 104px;
+    --altura-logo: 76px;
+  }
+}

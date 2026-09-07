@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap — a lista de endereços que queremos indexados.
+
+  O site é de página única, então há uma URL só. As seções são âncoras (#servicos,
+  #faq) e NÃO entram aqui: o Google as descobre lendo a página, e listá-las como
+  endereços separados seria dizer que existem páginas que não existem.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://omniiabr.tech/</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- lang="pt-BR": define o idioma para leitor de tela, para o Google indexar
+     como conteúdo em português e para o navegador não oferecer tradução. -->
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>OMNI.IA — Agentes de IA, Software Sob Medida e Automação</title>
+  <meta name="description"
+    content="Equipe de engenharia que constrói agentes de IA, software sob medida, automações e sites. Infraestrutura VPS dedicada, integrações e CRM. Diagnóstico gratuito em 24h." />
+  <meta name="author" content="OMNI.IA" />
+  <link rel="canonical" href="https://omniiabr.tech/" />
+
+  <!-- Open Graph: é o que monta a prévia do link no WhatsApp, LinkedIn e Instagram.
+       A URL da imagem PRECISA ser absoluta — quem baixa a prévia é o servidor da
+       rede social, que não sabe de que página o link veio. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="OMNI.IA" />
+  <meta property="og:title" content="OMNI.IA — Agentes de IA, Software Sob Medida e Automação" />
+  <meta property="og:description"
+    content="Equipe de engenharia que constrói agentes de IA, software sob medida, automações e sites." />
+  <meta property="og:url" content="https://omniiabr.tech/" />
+  <meta property="og:image" content="https://omniiabr.tech/og-image.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@omniiabr" />
+
+  <!-- Favicon: só o símbolo (engrenagem), recortado da própria logo. O texto
+       "OMNI.IA TECNOLOGIA" vira um borrão em 32x32, então ícone de aba usa
+       apenas a marca gráfica — é o que toda empresa faz.
+       Obs.: o favicon do site antigo era LARANJA (#fe7b02), destoando da
+       marca azul. Aqui a identidade ficou consistente. -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+
+  <!-- theme-color: pinta a barra do navegador no celular com a cor do site,
+       para a página não ter uma faixa branca em cima do canvas escuro. -->
+  <meta name="theme-color" content="#08090a" />
+
+  <!-- preconnect abre a conexão com o servidor de fontes ANTES de o CSS pedir o
+       arquivo. Economiza o DNS + TLS na hora crítica do primeiro render. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- display=swap: o texto aparece imediatamente na fonte de sistema e troca
+       pela Inter quando ela chega. Sem isso, o usuário olha para uma tela em
+       branco enquanto a fonte baixa. -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <!-- O React monta a aplicação inteira dentro desta div. -->
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

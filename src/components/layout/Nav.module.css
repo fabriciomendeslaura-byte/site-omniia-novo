@@ -1,0 +1,188 @@
+/**
+ * Barra de navegação fixa.
+ */
+
+.cabecalho {
+  position: fixed;
+  inset: 0 0 auto 0; /* atalho para top:0; right:0; bottom:auto; left:0 */
+  z-index: 100;
+
+  /* Só a cor de fundo e a borda transicionam — nada de layout, para a barra
+     não "tremer" enquanto a página rola. */
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+
+  border-bottom: 1px solid transparent;
+}
+
+/**
+ * Estado "página rolada": a barra ganha corpo para o conteúdo não atravessar.
+ *
+ * `backdrop-filter: blur` desfoca o que passa POR TRÁS do elemento. É o que
+ * permite a barra ser semitransparente e ainda assim legível. Custa GPU, então
+ * está só aqui e em mais nenhum lugar do site.
+ */
+.rolou {
+  background-color: rgba(8, 9, 10, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: var(--color-border);
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-24);
+  height: var(--altura-nav);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo img {
+  /* Altura vem do token (muda entre celular e desktop); a largura é automática
+     para a proporção da imagem mandar e a logo nunca distorcer. */
+  height: var(--altura-logo);
+  width: auto;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.logo:hover img {
+  opacity: 0.75;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  /* Ocupa o espaço do meio e empurra o CTA para a direita. */
+  margin-inline: auto;
+}
+
+.link {
+  position: relative;
+  font-size: 13px;
+  color: var(--color-text-body);
+  padding: var(--spacing-8) var(--spacing-12);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--color-text-primary);
+}
+
+/**
+ * Sublinhado que cresce do centro no hover.
+ *
+ * Feito com `::after` + `scaleX` porque animar `transform` é barato para o
+ * navegador. Animar `width` obrigaria a recalcular o layout a cada quadro.
+ */
+.link::after {
+  content: '';
+  position: absolute;
+  left: var(--spacing-12);
+  right: var(--spacing-12);
+  bottom: 4px;
+  height: 1px;
+  background-color: var(--color-action);
+  transform: scaleX(0);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   MENU MOBILE
+   ============================================================ */
+
+.botaoMenu {
+  display: none; /* só aparece no celular (media query no fim do arquivo) */
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+}
+
+.traco {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  margin-inline: auto;
+  background-color: var(--color-text-body);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+/* Os dois traços giram e se cruzam, virando um "X". */
+.tracoAtivo:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+
+.tracoAtivo:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+.menuMobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16) clamp(var(--spacing-20), 4vw, var(--spacing-32)) var(--spacing-32);
+
+  background-color: var(--surface-void);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.menuMobile nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkMobile {
+  padding: var(--spacing-16) 0;
+  font-size: 17px;
+  color: var(--color-text-body);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.linkMobile:active {
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   RESPONSIVO
+   Abaixo de 860px os links não cabem: viram menu recolhível.
+   ============================================================ */
+@media (max-width: 860px) {
+  .links,
+  .ctaTopo {
+    display: none;
+  }
+
+  .botaoMenu {
+    display: flex;
+  }
+}
+
+/* Acima de 860px o menu mobile nunca aparece, mesmo se o estado ficasse aberto
+   (ex.: girar o celular para paisagem com o menu aberto). */
+@media (min-width: 861px) {
+  .menuMobile {
+    display: none;
+  }
+}

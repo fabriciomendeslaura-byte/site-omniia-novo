@@ -1,0 +1,151 @@
+/**
+ * Processo — três passos lado a lado, ligados por uma linha.
+ */
+
+.secao {
+  padding-block: clamp(var(--spacing-64), 10vw, var(--spacing-128));
+}
+
+/* ============================================================
+   CABEÇALHO
+   ============================================================ */
+
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  max-width: 68ch;
+  margin-bottom: clamp(var(--spacing-48), 7vw, var(--spacing-80));
+}
+
+.etiqueta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-berkeley-mono);
+  font-size: 12px;
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+}
+
+.etiquetaBarra {
+  color: var(--color-action);
+  opacity: 0.7;
+}
+
+.titulo {
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: var(--font-weight-w510);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+}
+
+.tituloDestaque {
+  color: var(--color-text-muted);
+}
+
+.descricao {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 60ch;
+}
+
+/* ============================================================
+   OS PASSOS
+   ============================================================ */
+
+.passos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(var(--spacing-32), 4vw, var(--spacing-48));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* O Reveal fica entre a grade e o <li>, então precisa esticar junto —
+   sem isso, os três passos perderiam o alinhamento do topo. */
+.passoWrapper {
+  display: flex;
+}
+
+.passo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+}
+
+/**
+ * O topo do passo: número e a linha que liga ao próximo.
+ *
+ * A linha é o que transforma três blocos soltos numa SEQUÊNCIA. Sem ela, o
+ * olho lê "três coisas"; com ela, lê "um caminho" — e caminho tem fim, o que
+ * é exatamente a sensação que a seção precisa passar.
+ */
+.passoTopo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  margin-bottom: var(--spacing-8);
+}
+
+.passoCodigo {
+  font-family: var(--font-berkeley-mono);
+  font-size: 12px;
+  letter-spacing: -0.013em;
+  color: var(--color-action);
+  flex-shrink: 0;
+}
+
+.passoLinha {
+  flex: 1;
+  height: 1px;
+  /* Degradê em vez de cor sólida: a linha nasce visível e se dissolve, em vez
+     de bater num corte seco na borda da coluna. */
+  background: linear-gradient(to right, var(--color-border-strong), transparent);
+}
+
+.passoTitulo {
+  font-size: 20px;
+  font-weight: var(--font-weight-w510);
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  color: var(--color-text-primary);
+}
+
+/* A "duração" carrega a informação que derruba a objeção — "gratuito",
+   "sem compromisso", "prazo definido antes". Fica em mono e na cor de apoio:
+   presente para quem procura, discreta para quem não. */
+.passoDuracao {
+  font-family: var(--font-berkeley-mono);
+  font-size: 11.5px;
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+}
+
+.passoDescricao {
+  margin-top: var(--spacing-8);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 860px) {
+  .passos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-40);
+  }
+
+  /* Em coluna única a linha horizontal perde o sentido: ela ligaria o passo
+     à borda direita da tela, e não ao próximo. */
+  .passoLinha {
+    display: none;
+  }
+}

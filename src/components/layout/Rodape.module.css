@@ -1,0 +1,229 @@
+/**
+ * Rodapé.
+ */
+
+.rodape {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--surface-carbon);
+  padding-block: clamp(var(--spacing-48), 7vw, var(--spacing-80));
+  /* Espaço extra embaixo para o banner de cookies não cobrir a última linha
+     enquanto ele estiver na tela. */
+  padding-bottom: clamp(var(--spacing-64), 8vw, var(--spacing-96));
+}
+
+/* ============================================================
+   TOPO
+   ============================================================ */
+
+.topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(var(--spacing-40), 6vw, var(--spacing-80));
+  padding-bottom: var(--spacing-40);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.marca {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  align-items: flex-start;
+}
+
+.logo {
+  height: 62px;
+  width: auto;
+}
+
+.assinatura {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 44ch;
+}
+
+.local {
+  font-family: var(--font-berkeley-mono);
+  font-size: 11.5px;
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+}
+
+.colunas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-32);
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.colunaTitulo {
+  font-family: var(--font-berkeley-mono);
+  font-size: 11.5px;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+  margin-bottom: var(--spacing-4);
+}
+
+.colunaLink {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+  width: fit-content;
+}
+
+.colunaLink:hover {
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   POLÍTICA DE PRIVACIDADE
+   ============================================================ */
+
+.privacidade {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.privacidadeTitulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  padding-block: var(--spacing-24);
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: var(--font-weight-w510);
+  color: var(--color-text-body);
+  list-style: none;
+
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.privacidadeTitulo::-webkit-details-marker {
+  display: none;
+}
+
+.privacidadeTitulo:hover {
+  color: var(--color-text-primary);
+}
+
+/* O mesmo sinal +/− do FAQ. Repetir o padrão é o que faz o site parecer um
+   sistema: o usuário aprende uma vez e reconhece em todo lugar. */
+.sinal {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.sinal::before,
+.sinal::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1.5px;
+  background-color: var(--color-text-faint);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.sinal::after {
+  transform: rotate(90deg);
+}
+
+.privacidade[open] .sinal::after {
+  transform: rotate(0deg);
+}
+
+.privacidadeCorpo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-24) var(--spacing-40);
+  padding-bottom: var(--spacing-32);
+}
+
+.blocoPrivacidade {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.blocoTitulo {
+  font-size: 13px;
+  font-weight: var(--font-weight-w510);
+  color: var(--color-text-body);
+}
+
+.blocoTexto {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+.base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-16);
+  padding-top: var(--spacing-24);
+}
+
+.copyright {
+  font-size: 12.5px;
+  color: var(--color-text-faint);
+}
+
+.baseLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-20);
+}
+
+.baseLink {
+  font-size: 12.5px;
+  color: var(--color-text-faint);
+  transition: color var(--duration-fast) var(--ease-out);
+  /* O "Rever cookies" é <button> (executa ação) e "Privacidade" é <a> (navega).
+     Esta regra iguala a aparência dos dois sem apagar a diferença semântica,
+     que é o que o leitor de tela usa para anunciar cada um corretamente. */
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+.baseLink:hover {
+  color: var(--color-text-body);
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 860px) {
+  .topo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-40);
+  }
+
+  .privacidadeCorpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .colunas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-24);
+  }
+}

@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  max-width: var(--page-max-width);
+  /* `margin-inline: auto` centraliza. É a versão moderna de
+     `margin-left: auto; margin-right: auto` — uma linha em vez de duas. */
+  margin-inline: auto;
+
+  /* clamp(mínimo, ideal, máximo): o respiro lateral cresce junto com a tela,
+     sem precisar de media query. No celular fica 20px; num monitor grande,
+     32px. É responsividade fluida — o layout não "pula" em pontos de quebra. */
+  padding-inline: clamp(var(--spacing-20), 4vw, var(--spacing-32));
+}

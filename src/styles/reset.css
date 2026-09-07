@@ -1,0 +1,138 @@
+/**
+ * Reset — zera as diferenças entre navegadores antes de a gente estilizar.
+ *
+ * Sem isso, o mesmo código renderiza com margens diferentes no Chrome, Safari
+ * e Firefox, e a gente passa o dia caçando "por que no iPhone está torto".
+ */
+
+/* border-box: quando você diz "largura 300px", o padding e a borda cabem DENTRO
+   desses 300px. No padrão do navegador (content-box) eles somam por fora, e o
+   elemento estoura o container. É o ajuste que mais evita layout quebrado. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+ * O atributo `hidden` PRECISA esconder de verdade.
+ *
+ * O navegador já aplica `display: none` em [hidden], mas essa regra vem da
+ * folha padrão dele — o degrau mais fraco da especificidade. Qualquer
+ * `display: flex` ou `display: grid` numa CLASSE vence e o elemento reaparece.
+ *
+ * Foi exatamente o que aconteceu com o menu do celular: ele nascia aberto,
+ * porque `.menuMobile { display: flex }` ganhava do `hidden`.
+ *
+ * Este é um dos poucos usos legítimos de `!important`: a regra não é
+ * decoração, é uma GARANTIA — "escondido é escondido", sem exceção.
+ * `!important` para vencer briga de estilo é gambiarra; para blindar uma
+ * invariante do sistema, é a ferramenta certa.
+ */
+[hidden] {
+  display: none !important;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  /* Faz o clique num link "#secao" rolar suavemente em vez de teletransportar. */
+  scroll-behavior: smooth;
+  /* -webkit-font-smoothing: deixa a fonte clara sobre fundo escuro menos
+     "gorda" no macOS. Sem isso o texto branco no preto parece em negrito. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* text-size-adjust: impede o iOS de aumentar a fonte sozinho ao girar a tela. */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  line-height: 1.5;
+}
+
+/* Mídia é inline por padrão, o que cria um espaço fantasma embaixo da imagem.
+   `display: block` resolve; `max-width: 100%` impede a imagem de estourar o
+   container no celular. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Campos de formulário não herdam a fonte por padrão — herdam a do sistema.
+   Sem esta linha, o input aparece com uma fonte diferente do resto do site. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* overflow-wrap: quebra palavra gigante (URL, e-mail) em vez de deixar ela
+   furar o layout no celular. */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* Tipografia de título fica por conta do nosso sistema, não do navegador. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/**
+ * ACESSIBILIDADE — respeitar quem pediu menos animação.
+ *
+ * Quem tem enxaqueca vestibular ou sensibilidade a movimento liga essa opção
+ * no sistema operacional. Ignorar isso pode literalmente passar mal a pessoa.
+ * Não é "detalhe de acessibilidade": é requisito.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

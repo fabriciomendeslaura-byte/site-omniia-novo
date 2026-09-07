@@ -1,0 +1,26 @@
+# robots.txt — OMNI.IA
+# Diz aos rastreadores o que podem visitar.
+
+User-agent: *
+Allow: /
+
+# Os rastreadores das IAs entram explicitamente.
+# Motivo: hoje uma parte das buscas termina numa resposta gerada, não numa lista de
+# links. Bloquear esses robôs é sumir dessas respostas — e a maioria dos concorrentes
+# bloqueia sem perceber, ou nem sabe que eles existem.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://omniiabr.tech/sitemap.xml

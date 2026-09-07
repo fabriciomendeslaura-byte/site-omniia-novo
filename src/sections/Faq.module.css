@@ -1,0 +1,171 @@
+/**
+ * FAQ — accordion nativo com <details>/<summary>.
+ */
+
+.secao {
+  padding-block: clamp(var(--spacing-64), 10vw, var(--spacing-128));
+}
+
+/* ============================================================
+   CABEÇALHO
+   ============================================================ */
+
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  max-width: 68ch;
+  margin-bottom: clamp(var(--spacing-40), 6vw, var(--spacing-64));
+}
+
+.etiqueta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-berkeley-mono);
+  font-size: 12px;
+  letter-spacing: -0.013em;
+  color: var(--color-text-faint);
+}
+
+.etiquetaBarra {
+  color: var(--color-action);
+  opacity: 0.7;
+}
+
+.titulo {
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: var(--font-weight-w510);
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+}
+
+.tituloDestaque {
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   AS PERGUNTAS
+   ============================================================ */
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  max-width: 78ch;
+}
+
+.item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pergunta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-24);
+  padding-block: var(--spacing-24);
+  cursor: pointer;
+
+  font-size: 17px;
+  font-weight: var(--font-weight-w510);
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+  color: var(--color-text-body);
+
+  transition: color var(--duration-fast) var(--ease-out);
+
+  /* Remove o triângulo padrão do navegador. Precisa das duas linhas:
+     o Safari usa o pseudo-elemento próprio, os outros usam list-style. */
+  list-style: none;
+}
+
+.pergunta::-webkit-details-marker {
+  display: none;
+}
+
+.pergunta:hover {
+  color: var(--color-text-primary);
+}
+
+/* A pergunta aberta ganha contraste máximo: é onde o leitor está agora. */
+.item[open] .pergunta {
+  color: var(--color-text-primary);
+}
+
+/**
+ * O sinal de + / ×.
+ *
+ * Duas barras cruzadas: a vertical gira 90° ao abrir e some sobre a
+ * horizontal, virando um "−". Animar `transform` é barato; trocar o caractere
+ * por JavaScript seria mais código para um efeito pior.
+ */
+.sinal {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.sinal::before,
+.sinal::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1.5px;
+  background-color: var(--color-text-faint);
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.sinal::after {
+  transform: rotate(90deg);
+}
+
+.item[open] .sinal::after {
+  transform: rotate(0deg);
+}
+
+.item[open] .sinal::before,
+.item[open] .sinal::after {
+  background-color: var(--color-action);
+}
+
+.resposta {
+  padding-bottom: var(--spacing-24);
+  padding-inline-end: var(--spacing-40);
+
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  max-width: 70ch;
+
+  /* A resposta entra com um deslize curto ao abrir. O <details> não anima a
+     altura sozinho, e animar `height` seria caro — então animamos só opacidade
+     e posição, que a GPU resolve. */
+  animation: abrirResposta var(--duration-base) var(--ease-out);
+}
+
+@keyframes abrirResposta {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resposta {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .resposta {
+    padding-inline-end: 0;
+  }
+}
