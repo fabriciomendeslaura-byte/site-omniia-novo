@@ -11,9 +11,33 @@ import { useCallback, useState } from 'react'
  * É a Responsabilidade Única (SRP) aplicada a um formulário.
  */
 
-/** O endereço do webhook do n8n que recebe o formulário. */
-const URL_WEBHOOK =
-  import.meta.env['VITE_WEBHOOK_CONTATO'] ?? 'https://webhook.omniiabr.com/webhook/Formulario'
+/** Endereço padrão do webhook do n8n. Usado quando não há configuração válida. */
+const URL_WEBHOOK_PADRAO = 'https://webhook.omniiabr.com/webhook/Formulario'
+
+/**
+ * O endereço do webhook que recebe o formulário.
+ *
+ * ⚠️ POR QUE NÃO USAMOS `??` AQUI (bug real, corrigido em 08/09/2026)
+ *
+ * A primeira versão era:
+ *   import.meta.env['VITE_WEBHOOK_CONTATO'] ?? URL_WEBHOOK_PADRAO
+ *
+ * O `??` (nullish coalescing) só substitui `null` e `undefined`. String VAZIA
+ * é um valor válido para ele:
+ *   ""        ??  'padrao'   →  ""        ← o padrão NÃO entra
+ *   undefined ??  'padrao'   →  'padrao'
+ *
+ * Em desenvolvimento não existe `.env`, então a variável é `undefined` e o
+ * padrão entrava: funcionava. Em produção a variável existia VAZIA, o `??`
+ * manteve o vazio, e o `fetch('')` passou a postar na própria página.
+ * Resultado: formulário funcionando local e quebrado no ar — o pior tipo de
+ * bug, porque não aparece em nenhum teste da máquina do desenvolvedor.
+ *
+ * A checagem abaixo é explícita de propósito: `.trim()` também derruba o caso
+ * de a variável vir com espaço em branco, que `||` sozinho deixaria passar.
+ */
+const urlConfigurada = import.meta.env['VITE_WEBHOOK_CONTATO']?.trim()
+const URL_WEBHOOK = urlConfigurada ? urlConfigurada : URL_WEBHOOK_PADRAO
 
 /**
  * Os campos do formulário.
