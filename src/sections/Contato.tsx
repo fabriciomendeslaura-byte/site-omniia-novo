@@ -41,9 +41,6 @@ export function Contato() {
           <span className={css.sucessoMarca}>✓</span>
           <h2 className={css.sucessoTitulo}>{SECAO_CONTATO.sucessoTitulo}</h2>
           <p className={css.sucessoTexto}>{SECAO_CONTATO.sucessoTexto}</p>
-          {/* O remate: o visitante acabou de ser atendido pelo produto.
-              É a única prova do site que ele viveu, em vez de ler. */}
-          <p className={css.sucessoRemate}>{SECAO_CONTATO.sucessoRemate}</p>
         </div>
       </Container>
     )

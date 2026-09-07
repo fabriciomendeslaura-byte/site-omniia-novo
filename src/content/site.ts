@@ -349,30 +349,29 @@ export const SECAO_CONTATO = {
    * TELA DE SUCESSO.
    *
    * ⚠️ NÃO EXISTE BOTÃO DE WHATSAPP AQUI, e é de propósito.
-   * Ao enviar o formulário, a automação lê os dados, analisa o contexto e
-   * INICIA a conversa no WhatsApp da pessoa. Oferecer um botão "fale com a
-   * gente" seria pedir para ela procurar um atendimento que já está a caminho
-   * — atrito puro, e ainda passa a impressão de que a empresa não fez nada.
+   * Ao enviar o formulário, o contato é iniciado automaticamente no WhatsApp
+   * da pessoa. Oferecer um botão "fale com a gente" seria pedir para ela
+   * procurar um atendimento que já está a caminho — atrito puro, e ainda passa
+   * a impressão de que a empresa não fez nada.
    *
-   * ⚠️ O TEMPO VERBAL É DELIBERADO: "em segundos você recebe", e não
-   * "já te chamamos".
-   * A automação leva alguns instantes para processar. Afirmar que a mensagem
-   * JÁ foi enviada faz a pessoa abrir o WhatsApp, não achar nada e concluir
-   * que o site mentiu — logo no primeiro contato, que é quando a confiança
-   * ainda está sendo construída. Prometer o futuro imediato cria a expectativa
-   * certa: a mensagem chega e a promessa se cumpre na frente dela.
-   * Regra geral de copy: nunca dar como feito o que o usuário ainda não pode
-   * conferir.
+   * ⚠️ NÃO MENCIONAMOS "IA" AQUI (decidido em 08/09/2026).
+   * O site inteiro vende agentes de IA — mas anunciar "nossa IA vai te chamar"
+   * bem antes da conversa dispara no leitor o "ah, vou falar com robô", e ele
+   * entra na conversa na defensiva. Quem contrata quer sentir que a EMPRESA
+   * está cuidando do caso dele. A tecnologia aparece no resto da página, onde
+   * é argumento de venda; aqui ela só atrapalharia o primeiro contato.
    *
-   * O remate é o melhor argumento de venda do site inteiro: o visitante está
-   * SENDO ATENDIDO pelo produto sem perceber que é uma demonstração.
-   * Nenhum texto convence tanto quanto a experiência que a pessoa vive.
+   * ⚠️ O TEMPO VERBAL É DELIBERADO: "em segundos entramos em contato", e não
+   * "já entramos em contato".
+   * O processamento leva alguns instantes. Afirmar que a mensagem JÁ foi
+   * enviada faz a pessoa abrir o WhatsApp, não achar nada e concluir que o
+   * site mentiu — logo no primeiro contato, quando a confiança ainda está
+   * sendo construída. Regra geral de copy: nunca dar como feito o que o
+   * usuário ainda não pode conferir.
    */
-  sucessoTitulo: 'Pronto. Em segundos você recebe nossa mensagem.',
+  sucessoTitulo: 'Pronto. Em segundos entramos em contato.',
   sucessoTexto:
-    'Nossa IA já está lendo o que você enviou e analisando o contexto da sua empresa. Em instantes ela chama no WhatsApp que você informou — pode deixar o celular por perto.',
-  sucessoRemate:
-    'E sim: isso que está acontecendo agora é exatamente o que a gente constrói para a sua empresa.',
+    'Estamos analisando as informações que você enviou e o contexto da sua empresa. Em instantes chamamos no WhatsApp que você informou — pode deixar o celular por perto.',
 
   erroTexto: 'Não conseguimos enviar agora. Tente de novo ou fale com a gente pelo WhatsApp.',
 } as const
