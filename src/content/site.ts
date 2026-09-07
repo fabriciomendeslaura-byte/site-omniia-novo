@@ -349,21 +349,30 @@ export const SECAO_CONTATO = {
    * TELA DE SUCESSO.
    *
    * ⚠️ NÃO EXISTE BOTÃO DE WHATSAPP AQUI, e é de propósito.
-   * No instante em que o formulário é enviado, a automação já lê os dados,
-   * analisa o contexto e INICIA a conversa no WhatsApp da pessoa. Oferecer um
-   * botão "fale com a gente" seria pedir para ela procurar um atendimento que
-   * já está esperando por ela — atrito puro, e ainda passa a impressão de que
-   * a empresa não fez nada.
+   * Ao enviar o formulário, a automação lê os dados, analisa o contexto e
+   * INICIA a conversa no WhatsApp da pessoa. Oferecer um botão "fale com a
+   * gente" seria pedir para ela procurar um atendimento que já está a caminho
+   * — atrito puro, e ainda passa a impressão de que a empresa não fez nada.
    *
-   * O remate é o melhor argumento de venda do site inteiro: o visitante acabou
-   * de SER ATENDIDO pelo produto sem perceber que era uma demonstração.
-   * Nenhum texto convence tanto quanto a experiência que a pessoa acabou de ter.
+   * ⚠️ O TEMPO VERBAL É DELIBERADO: "em segundos você recebe", e não
+   * "já te chamamos".
+   * A automação leva alguns instantes para processar. Afirmar que a mensagem
+   * JÁ foi enviada faz a pessoa abrir o WhatsApp, não achar nada e concluir
+   * que o site mentiu — logo no primeiro contato, que é quando a confiança
+   * ainda está sendo construída. Prometer o futuro imediato cria a expectativa
+   * certa: a mensagem chega e a promessa se cumpre na frente dela.
+   * Regra geral de copy: nunca dar como feito o que o usuário ainda não pode
+   * conferir.
+   *
+   * O remate é o melhor argumento de venda do site inteiro: o visitante está
+   * SENDO ATENDIDO pelo produto sem perceber que é uma demonstração.
+   * Nenhum texto convence tanto quanto a experiência que a pessoa vive.
    */
-  sucessoTitulo: 'Pronto. Já te chamamos no WhatsApp.',
+  sucessoTitulo: 'Pronto. Em segundos você recebe nossa mensagem.',
   sucessoTexto:
-    'Nossa IA leu o que você enviou, analisou o contexto da sua empresa e já começou a conversa no número que você informou. É só abrir o WhatsApp e continuar por lá.',
+    'Nossa IA já está lendo o que você enviou e analisando o contexto da sua empresa. Em instantes ela chama no WhatsApp que você informou — pode deixar o celular por perto.',
   sucessoRemate:
-    'E sim — isso que acabou de acontecer é exatamente o que a gente constrói para a sua empresa.',
+    'E sim: isso que está acontecendo agora é exatamente o que a gente constrói para a sua empresa.',
 
   erroTexto: 'Não conseguimos enviar agora. Tente de novo ou fale com a gente pelo WhatsApp.',
 } as const
