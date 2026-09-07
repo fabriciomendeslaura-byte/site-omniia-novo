@@ -1,145 +1,148 @@
 # Estado atual — onde paramos
 
-**Atualizado:** 07/09/2026
-**Status:** ✅ Etapas 1 e 2 concluídas e **aprovadas pelo Fabricio**
+**Atualizado:** 08/09/2026
+**Status:** site **completo** e no GitHub · aguardando a conexão do formulário
 
-> 📌 **Leia este arquivo primeiro ao retomar.** Ele diz onde paramos, o que já
-> está decidido e qual é o próximo passo — sem precisar reler a conversa.
+> 📌 **Leia este arquivo primeiro ao retomar.**
 
 ---
 
-## Como voltar a rodar (2 comandos)
+## 🔴 O que precisa de você (2 coisas)
 
-```bash
-cd "c:/Users/Point Gamer/OneDrive/Área de Trabalho/NOVO SITE OMNI.IA"
-npm run dev
+### 1. O workflow do n8n está DESATIVADO
+
+Testado em 08/09/2026 com uma requisição real:
+
+```
+POST https://webhook.omniiabr.com/webhook/Formulario
+→ HTTP 404
+→ "The requested webhook POST Formulario is not registered."
+→ "The workflow must be active for a production URL to run successfully."
 ```
 
-Abre em **http://localhost:5173**
+**Consequência:** o formulário do site **que está no ar hoje** não entrega nada.
+Os leads que preencheram nesse período se perderam.
 
-| Comando | O que faz |
-|---|---|
-| `npm run dev` | Sobe o site em desenvolvimento, com atualização automática |
-| `npm run typecheck` | Confere os tipos. **Precisa terminar sem nenhuma saída** |
-| `npm run build` | Gera a versão de produção em `dist/` |
-| `npm run preview` | Serve o `dist/` para conferir o build final |
+O workflow existe — **"SRD FORMULARIO"** (`N9SMx1MDiK85tceE`), criado em 27/10/2025 —
+mas está com o botão de ativação desligado.
+
+**O que fazer:**
+- Abrir o workflow no n8n e **ativar**
+- Conferir se o caminho do webhook continua `Formulario`
+- Ajustar os campos: o formulário novo mudou (ver o contrato em `integracao-formulario.md`)
+
+> Não ativei por conta própria de propósito: não consigo ler o que o workflow faz
+> (o acesso via MCP está desligado nas configurações dele), e ativar às cegas poderia
+> disparar e-mail ou mensagem para pessoas reais.
+
+### 2. Liberar o acesso MCP no workflow (opcional)
+
+Se quiser que eu ajuste o workflow daqui, é preciso ligar o acesso MCP nas
+configurações dele. Hoje o n8n responde:
+`"Workflow is not available in MCP. Enable MCP access in workflow settings."`
 
 ---
 
-## O que já está pronto
+## O que está pronto
 
 | Etapa | Entrega | Status |
 |---|---|---|
-| 1 | Projeto React + Vite + TypeScript, tokens, fontes, logo | ✅ |
-| 2 | **Nav + Hero** com movimento e painel de código | ✅ **aprovado** |
-| 3 | Seções de serviços (os 6) | ⬜ **próximo passo** |
-| 4 | Como funciona · Infraestrutura VPS · FAQ | ⬜ |
-| 5 | Formulário + integração com o webhook n8n | ⬜ |
-| 6 | Movimento fino, responsivo, performance, deploy | ⬜ |
+| 1 | Fundação (React + Vite + TS, tokens, logo) | ✅ |
+| 2 | Nav + Hero com movimento e painel de código | ✅ |
+| 3 | Serviços — 6 blocos com visuais em CSS/SVG | ✅ |
+| 4 | Engenharia — a prova técnica | ✅ |
+| 5 | Processo · FAQ · Contato · Rodapé | ✅ |
+| 6 | LGPD — banner de cookies e política | ✅ |
+| 7 | Segurança — CSP e cabeçalhos no `vercel.json` | ✅ |
+| 8 | SEO — robots, sitemap e `llms.txt` | ✅ |
+| 9 | GitHub + Vercel | ✅ |
+| 10 | **Formulário ligado ao n8n** | 🔴 **depende do item acima** |
 
-**Verificado em 07/09/2026:** `tsc --noEmit` sem erros · build passando ·
-200 KB de JS (63 KB comprimido) · 12,9 KB de CSS (3,8 KB comprimido).
-
----
-
-## Decisões já fechadas (não reabrir sem motivo)
-
-| Assunto | Decisão | Por quê |
-|---|---|---|
-| **Cor de ação** | `#2B7FFF` · texto do botão `#08090a` | Azul da marca clareado. Medido: 5,30:1 contra o fundo (o `#004AAD` dá só 2,45:1 e some no escuro) |
-| **Cor institucional** | `#004AAD` | Fica na logo e em material externo. **Nunca em botão.** |
-| **Logo** | Versão branca sólida | Wordmark sólido lê melhor em tamanho pequeno |
-| **Stack** | React + Vite + TypeScript · Vercel | Mesma stack que o Fabricio já usa |
-| **Estilo** | CSS Modules | Escopo isolado sem dependência extra |
-| **Posicionamento** | Software house, não agência de automação | Pedido explícito: "visão de equipe de programadores" |
+**Verificado em 08/09/2026:** `tsc --noEmit` sem erros · build passando ·
+**75 KB de JS** e **8 KB de CSS** comprimidos · todas as rotas públicas respondendo.
 
 ---
 
-## Próximo passo — Etapa 3
+## Repositório
 
-Construir a seção de serviços com os 6 blocos que já estão prontos em
-`src/content/site.ts` (constante `SERVICOS`):
+**GitHub:** https://github.com/fabriciomendeslaura-byte/site-omniia-novo
+**Vercel:** conectada ao repo — cada push publica sozinho
 
-`01` Agentes de IA · `02` Automações · `03` CRM Inteligente ·
-`04` Software Sob Medida · `05` Sites · `06` Arquitetura VPS Privada
-
-**Diretrizes que valem para essa seção:**
-- Blocos alternados texto/visual — **nunca grade de 3 colunas** (o design system proíbe)
-- 96px entre seções
-- O código `01`…`06` em fonte monoespaçada (é o "design de código")
-- Reaproveitar `<Reveal>` para a entrada; **não criar outro mecanismo de animação**
+```bash
+cd "c:/Users/Point Gamer/OneDrive/Área de Trabalho/NOVO SITE OMNI.IA"
+npm run dev              # desenvolvimento
+npm run dev -- --host    # acessível pelo celular na mesma rede
+npm run typecheck        # precisa terminar SEM nenhuma saída
+npm run build            # versão de produção
+npm run preview          # serve o build final
+```
 
 ---
 
-## Pendências abertas
+## A página, seção por seção
+
+A ordem **não é estética, é argumento** — cada seção responde uma pergunta:
+
+```
+Hero        → quem são vocês?
+Serviços    → o que vocês entregam?         (6 blocos alternados)
+Engenharia  → vocês sabem mesmo fazer?      (prova TÉCNICA, sem prova social)
+Processo    → como começa? dá trabalho?     (3 passos, o 1º grátis)
+FAQ         → mas e se...?                  (6 perguntas)
+Contato     → ok, quero falar               (formulário + LGPD)
+Rodapé      → contato e Política de Privacidade
+```
+
+---
+
+## Decisões fechadas (não reabrir sem motivo)
+
+| Assunto | Decisão |
+|---|---|
+| **Escopo** | Site da **EMPRESA**, não do SaaS. Sem plano, preço ou checkout |
+| **Posicionamento** | Software house, não agência de automação |
+| **Agentes de IA** | Uma **frota** — um agente por função (marketing, financeiro, atendimento), mais a configuração do assistente do empresário. Nunca só atendimento |
+| **Cor de ação** | `#2B7FFF` · texto do botão `#08090a` · `#004AAD` institucional |
+| **Logo** | A original do site no ar (azul + wordmark branco) |
+| **Ordem dos serviços** | Software → **Agentes de IA** → Aplicativos → Sites → Automações → Infra |
+| **Textos** | Reescritos com a skill `copywriting` |
+| **Visuais** | Desenhados em CSS/SVG. **Nunca imagem genérica de IA** |
+| **Stack** | React + Vite + TypeScript · CSS Modules · Vercel |
+
+---
+
+## Pendências menores
 
 | # | Item | Observação |
 |---|---|---|
-| 1 | **Resposta do FAQ 7** | *"Em quanto tempo o agente responde?"* — o texto não foi recuperado do site atual. **Perguntar ao Fabricio.** |
-| 2 | **Prints reais do produto** | CRM, WhatsApp com a Laura, dashboard, fluxo do n8n. O design system proíbe imagem genérica — precisa ser tela real |
-| 3 | **`og-image.png`** | O `index.html` já aponta para ele; o arquivo ainda não existe |
-| ~~4~~ | ~~Página vende o quê?~~ | ✅ **Decidido 07/09:** é o site da **empresa**, não do SaaS. Ver a regra abaixo. |
-| 5 | **Logo em SVG** | Adiado. Os 773px cobrem o header até retina 2x |
-| 6 | **`vercel.json` com CSP** | Criar na etapa 6, antes do deploy. `connect-src` precisa listar `webhook.omniiabr.com` |
-
----
-
-## 🎯 O que este site é — e o que ele NÃO é
-
-**Decidido pelo Fabricio em 07/09/2026:**
-
-> Este é o site da **empresa OMNI.IA** — criadora de software, aplicativos, sites
-> e automação. **Não é o site do SaaS.**
-
-| ✅ O site vende | ❌ O site NÃO é |
-|---|---|
-| Software sob medida | Página de venda do OmniZap |
-| Aplicativos | Lugar de mostrar planos Start/Pro |
-| Sites | Checkout ou trial self-service |
-| Automação | Vitrine de um produto único |
-| Agentes de IA | |
-
-**Consequência prática:** nada de preço de plano, botão de assinar ou tabela
-Start × Pro. O caminho de conversão é **um só**: diagnóstico gratuito → conversa →
-orçamento por projeto. O OmniZap, se aparecer, é **exemplo do que a empresa
-construiu** — nunca o produto sendo vendido na página.
-
-> Isso é coerente com a decisão de 28/08 no cérebro: acima do Pro, a OMNI.IA
-> vende **projeto sob medida**. Este site é a porta desse caminho.
-
-⚠️ **Revisar na etapa 3:** o painel de código do hero mostra um fluxo de
-qualificação de lead. Continua válido (agentes de IA é um dos serviços), mas
-vale conferir se não está puxando demais para o lado do SaaS — talvez alternar
-com um exemplo de software/app sob medida.
+| 1 | **`og-image.png`** | O `index.html` aponta para ele, mas o arquivo não existe. Sem ele, o link compartilhado no WhatsApp sai sem imagem |
+| 2 | **Prints reais** | CRM, dashboard, fluxo do n8n. Deixariam a seção de Engenharia mais forte |
+| 3 | **Domínio** | `omniiabr.tech` ainda aponta para o site antigo. Só virar depois de validar o novo |
+| 4 | **Logo em SVG** | Hoje é PNG de 232px. Suficiente para o header; vetorizar só se for usada grande |
 
 ---
 
 ## ⚠️ Regras que não podem ser quebradas
 
-- **Uma cor cromática por tela.** Só o botão primário usa `--color-action`
-- **Nunca peso 700+.** O sistema para em 590
-- **Separação por borda hairline, não por sombra**
+- **Uma cor cromática por tela** — só o botão primário usa `--color-action`
+- **Nunca peso 700+** — o sistema para em 590
+- **Separação por borda hairline, nunca por sombra**
 - **Raio máximo de card: 12px**
 - **Toda animação respeita `prefers-reduced-motion`**
-- **Não inventar prova social** — a operação tem zero clientes pagantes
+- **Não inventar prova social** — zero clientes pagantes, a prova é técnica
+- **Trocou o webhook? Atualize o `connect-src` da CSP** no `vercel.json`, senão o
+  navegador bloqueia o formulário e o erro aparece como se fosse bug de código
 
 ---
 
-## Mapa dos arquivos
+## Documentação
 
-```
-├── docs/
-│   ├── ESTADO-ATUAL.md         ← este arquivo
-│   ├── BRIEFING-NOVO-SITE.md   ← conteúdo, design system, direção
-│   ├── CHANGELOG.md            ← o que mudou e quando
-│   ├── decisoes-tecnicas.md    ← por que foi feito assim (ADR)
-│   └── marca/                  ← logos
-├── src/
-│   ├── content/                ← TEXTO do site (mexer aqui para trocar frase)
-│   ├── styles/tokens.css       ← fonte da verdade das cores e medidas
-│   ├── components/layout/      ← Container, Nav
-│   ├── components/ui/          ← Button, Reveal, PainelCodigo
-│   ├── hooks/                  ← useReveal, usePonteiroLuz
-│   └── sections/               ← Hero (e as próximas seções)
-└── public/                     ← logos servidas pelo site
-```
+| Arquivo | O que tem |
+|---|---|
+| `ESTADO-ATUAL.md` | Este — ponto de retomada |
+| `BRIEFING-NOVO-SITE.md` | Conteúdo, design system e direção |
+| `integracao-formulario.md` | **Contrato de dados do formulário** (para o n8n) |
+| `seguranca.md` | O que cada cabeçalho protege |
+| `decisoes-tecnicas.md` | ADR — por que foi feito assim |
+| `CHANGELOG.md` | O que mudou e quando |
+| `marca/` | Logos e originais |
