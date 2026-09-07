@@ -146,6 +146,139 @@ Quando o motivo do projeto muda, a regra pode ser adaptada — desde que
 
 ---
 
+## ADR-008 — `??` versus `||` em variável de ambiente
+
+**Data:** 08/09/2026 · **Status:** aceita — **nasceu de um bug real em produção**
+
+**Contexto.** A URL do webhook vinha assim:
+```ts
+import.meta.env['VITE_WEBHOOK_CONTATO'] ?? URL_PADRAO
+```
+O formulário funcionava na máquina do desenvolvedor e **falhava em produção**.
+
+**A causa.** Na Vercel a variável existia, mas **vazia**. E o `??` (*nullish
+coalescing*) só substitui `null` e `undefined` — string vazia é valor válido para ele:
+
+| Expressão | Resultado |
+|---|---|
+| `undefined ?? 'padrao'` | `'padrao'` ✅ |
+| `"" ?? 'padrao'` | `""` ❌ |
+
+A URL virava `''`, e o `fetch('')` postava na própria página. Em desenvolvimento não
+existe `.env`, então a variável era `undefined` e o padrão entrava: **o bug era
+invisível localmente**.
+
+**Decisão.** Checagem explícita com `trim()`:
+```ts
+const urlConfigurada = import.meta.env['VITE_WEBHOOK_CONTATO']?.trim()
+const URL_WEBHOOK = urlConfigurada ? urlConfigurada : URL_WEBHOOK_PADRAO
+```
+
+**A regra que fica.** `??` serve quando `0`, `false` ou `''` são respostas **legítimas**
+(`quantidade ?? 10` — zero é zero). Para **configuração**, string vazia significa
+"não configurado", e aí o certo é `||` ou checagem explícita.
+
+**Abrimos mão de:** nada. `??` era a escolha errada para este caso.
+
+**Lição maior:** bug que só aparece em produção é o mais caro que existe, porque nenhum
+teste local o pega. Sempre que houver diferença entre ambientes, **inspecione o artefato
+publicado** — foi ler o bundle da Vercel que revelou a variável vazia.
+
+---
+
+## ADR-009 — Especificidade: `hidden` perdendo para uma classe
+
+**Data:** 08/09/2026 · **Status:** aceita — **bug real, corrigido na causa**
+
+**Contexto.** O menu do celular **nascia aberto**. O JSX usava `hidden={!menuAberto}`,
+que deveria escondê-lo.
+
+**A causa.** O `display: none` do atributo `hidden` vem da folha padrão do navegador —
+o degrau mais fraco da especificidade. A regra `.menuMobile { display: flex }` é uma
+**classe**, degrau acima. A classe vencia e o menu aparecia.
+
+```
+estilo inline  >  #id  >  .classe  >  elemento/atributo padrão
+```
+
+**Decisão.** Uma regra global no reset:
+```css
+[hidden] { display: none !important; }
+```
+
+**Motivo.** Consertar só `.menuMobile[hidden]` resolveria hoje e o mesmo bug voltaria no
+próximo componente com `hidden`. Este é um dos poucos usos legítimos de `!important`:
+a regra não é decoração, é uma **garantia** — "escondido é escondido". `!important` para
+vencer briga de estilo é gambiarra; para blindar uma invariante do sistema, é a
+ferramenta certa.
+
+---
+
+## ADR-010 — `color-scheme: dark` para controles nativos
+
+**Data:** 08/09/2026 · **Status:** aceita — **bug real**
+
+**Contexto.** O `<select>` abria com a lista de fundo branco e as opções invisíveis.
+
+**A causa.** As `<option>` **herdam** a cor branca definida no select, mas o fundo da
+lista aberta **não é desenhado pelo CSS** — é o sistema operacional que desenha, e ele
+usa branco. Texto branco sobre fundo branco.
+
+**Decisão.** `color-scheme: dark` no `:root`.
+
+**Motivo.** Vários elementos são renderizados pelo sistema e ignoram nosso
+`background-color`: a lista do `<select>`, a barra de rolagem, o seletor de data, o menu
+de contexto. Essa declaração avisa "a página é escura" e o sistema entrega a versão
+escura de **todos** eles. Uma linha resolve a categoria inteira, em vez de um remendo
+por componente.
+
+Mantida uma segunda camada (`.entrada option { … }`) porque alguns navegadores no
+Windows ainda teimam.
+
+---
+
+## ADR-011 — Prova técnica no lugar de prova social
+
+**Data:** 08/09/2026 · **Status:** aceita
+
+**Contexto.** Toda página de serviço tem uma seção de credibilidade, e o padrão do
+mercado é logo de cliente, depoimento e "+200 projetos entregues". A OMNI.IA está em
+pré-lançamento e **não tem cliente pagante**.
+
+**Decisão.** Criar a seção **Engenharia**: quatro pilares descrevendo como o software é
+construído por dentro (segurança validada no servidor, código que outro dev entende,
+monitoramento com alerta, sem aprisionamento do cliente).
+
+**Motivo.** Prova social diz *"outros confiaram"*; prova técnica diz *"olha como é feito
+por dentro"*. Para comprador desconfiado ou tecnicamente informado, a segunda costuma
+pesar mais — e é a **única honesta** nesta fase. Inventar depoimento é mentira que uma
+ligação derruba, e queima a marca de forma irreversível.
+
+**Abrimos mão de:** o atalho emocional que prova social dá.
+
+---
+
+## ADR-012 — Copy: nunca dar como feito o que não dá para conferir
+
+**Data:** 08/09/2026 · **Status:** aceita
+
+**Contexto.** A tela de sucesso dizia *"Já te chamamos no WhatsApp"*. A automação leva
+alguns instantes para processar.
+
+**Decisão.** Trocar para *"Em instantes entramos em contato"*, e **não mencionar IA**.
+
+**Motivo.** Afirmar que a mensagem já foi enviada faz a pessoa abrir o WhatsApp, não
+achar nada e concluir que o site mentiu — no **primeiro contato**, quando a confiança
+ainda está sendo construída. Promessa de futuro imediato cria a expectativa certa e se
+cumpre na frente dela.
+
+Sobre a IA: o site inteiro vende agentes, mas anunciar "nossa IA vai te chamar" logo
+antes da conversa dispara o *"vou falar com robô"*, e o lead entra na defensiva. Quem
+contrata quer sentir que a **empresa** está cuidando do caso dele. A tecnologia
+impressiona no resto da página; ali, só atrapalha.
+
+---
+
 ## ADR-007 — TypeScript no modo mais estrito
 
 **Data:** 07/09/2026 · **Status:** aceita

@@ -5,6 +5,72 @@ aqui fica a versão que um humano lê para lembrar do projeto.
 
 ---
 
+## 08/09/2026 — 🚀 Site completo e no ar em `omniiabr.tech`
+
+### Adicionado
+
+**Seções**
+- **Serviços** — 6 blocos alternando texto e visual, com desenhos em CSS/SVG puro
+  (painel de sistema, frota de agentes, celular, wireframe, fluxo em SVG, camadas)
+- **Engenharia** — a seção de PROVA: 4 pilares de prática técnica, em 2×2 com bordas
+  compartilhadas. Substitui a prova social que a empresa ainda não tem
+- **Processo** — 3 passos ligados por linha, com o primeiro gratuito
+- **FAQ** — accordion em `<details>` nativo (acessível, funciona sem JS, indexável)
+- **Contato** — formulário com validação, honeypot e consentimento LGPD
+- **Rodapé** — contato, navegação e Política de Privacidade completa
+
+**LGPD**
+- Banner de cookies com **"Recusar" do mesmo peso visual** que "Aceitar"
+- Nenhum rastreador carrega antes do consentimento (`podeRastrear`)
+- Consentimento obrigatório no formulário, nunca pré-marcado
+- Política em 9 blocos, em linguagem que se entende
+- Revogação possível pelo rodapé
+
+**Segurança e publicação**
+- `vercel.json` — CSP, HSTS, X-Frame-Options, Permissions-Policy e cache
+- `robots.txt` liberando GPTBot, ClaudeBot e PerplexityBot
+- `sitemap.xml` e **`llms.txt`** (descrição da empresa para IAs citarem)
+- Repositório no GitHub + deploy automático na Vercel
+
+### Corrigido
+
+- 🔴 **Formulário não enviava em produção.** `VITE_WEBHOOK_CONTATO` chegava VAZIA no
+  build, e o operador `??` não substitui string vazia — só `null`/`undefined`. A URL
+  virava `''` e o `fetch` postava na própria página. Em desenvolvimento a variável era
+  `undefined`, o padrão entrava e tudo funcionava: o bug **só existia no ar**
+- **Menu mobile nascia aberto.** O atributo `hidden` vem da folha do navegador (baixa
+  especificidade) e perdia para `.menuMobile { display: flex }`. Resolvido na raiz com
+  `[hidden] { display: none !important }`
+- **Dropdown invisível no tema escuro.** As `<option>` herdavam o texto branco, mas o
+  fundo da lista é desenhado pelo sistema operacional (branco). Resolvido com
+  `color-scheme: dark`, que corrige todos os controles nativos de uma vez
+- Removidas imagens não referenciadas do build (136 KB → 96 KB)
+
+### Descoberto
+
+- 🔴 **O workflow "SRD FORMULARIO" estava DESATIVADO** — comprovado com requisição real
+  (HTTP 404). O formulário do site antigo não entregava lead nenhum. Ativado pelo Fabricio
+
+### Decidido
+
+- **Ordem dos serviços é argumento:** Software → Agentes de IA → Aplicativos → Sites →
+  Automações → Infra. Começar por agentes faria concluir "agência de automação"
+- **Agentes de IA são uma FROTA**, um por função da empresa — nunca só atendimento
+- **Tela de sucesso sem botão de WhatsApp**: a automação já inicia a conversa
+- **Sem mencionar "IA" na tela de sucesso**: dispara o "vou falar com robô" e o lead
+  entra na conversa na defensiva
+- **"Em instantes entramos em contato"**, não "já entramos": nunca dar como feito o que
+  a pessoa ainda não pode conferir
+
+### Verificado
+
+- `tsc --noEmit` sem erros · build passando
+- **75 KB de JS · 8 KB de CSS** comprimidos
+- Domínio `omniiabr.tech` servindo o site novo, com HTTPS, HSTS e CSP ativos
+- Formulário enviando de ponta a ponta: navegador → CSP → CORS → n8n → WhatsApp
+
+---
+
 ## 07/09/2026 — Fundação + primeira tela
 
 ### Adicionado

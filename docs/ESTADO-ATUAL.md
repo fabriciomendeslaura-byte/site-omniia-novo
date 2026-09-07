@@ -1,45 +1,39 @@
 # Estado atual — onde paramos
 
 **Atualizado:** 08/09/2026
-**Status:** site **completo** e no GitHub · aguardando a conexão do formulário
+**Status:** 🟢 **NO AR em https://omniiabr.tech** — site completo e formulário funcionando
 
 > 📌 **Leia este arquivo primeiro ao retomar.**
 
 ---
 
-## 🔴 O que precisa de você (2 coisas)
+## ✅ Entregue
 
-### 1. O workflow do n8n está DESATIVADO
+O site novo substituiu o antigo em `omniiabr.tech` em 08/09/2026.
+Verificado em produção: bundle novo servido, HTTPS com HSTS, CSP e X-Frame-Options
+ativos, redirect da raiz para `www`, e formulário entregando de ponta a ponta
+(navegador → CSP → CORS → n8n → WhatsApp).
 
-Testado em 08/09/2026 com uma requisição real:
-
+**Fluxo de conversão que está rodando:**
 ```
-POST https://webhook.omniiabr.com/webhook/Formulario
-→ HTTP 404
-→ "The requested webhook POST Formulario is not registered."
-→ "The workflow must be active for a production URL to run successfully."
+visitante preenche o formulário
+  → n8n recebe (workflow "SRD FORMULARIO", ATIVO)
+  → automação analisa os dados e o contexto da empresa
+  → inicia a conversa no WhatsApp do lead em instantes
 ```
 
-**Consequência:** o formulário do site **que está no ar hoje** não entrega nada.
-Os leads que preencheram nesse período se perderam.
+---
 
-O workflow existe — **"SRD FORMULARIO"** (`N9SMx1MDiK85tceE`), criado em 27/10/2025 —
-mas está com o botão de ativação desligado.
+## ⚠️ Pendências
 
-**O que fazer:**
-- Abrir o workflow no n8n e **ativar**
-- Conferir se o caminho do webhook continua `Formulario`
-- Ajustar os campos: o formulário novo mudou (ver o contrato em `integracao-formulario.md`)
-
-> Não ativei por conta própria de propósito: não consigo ler o que o workflow faz
-> (o acesso via MCP está desligado nas configurações dele), e ativar às cegas poderia
-> disparar e-mail ou mensagem para pessoas reais.
-
-### 2. Liberar o acesso MCP no workflow (opcional)
-
-Se quiser que eu ajuste o workflow daqui, é preciso ligar o acesso MCP nas
-configurações dele. Hoje o n8n responde:
-`"Workflow is not available in MCP. Enable MCP access in workflow settings."`
+| # | Item | Impacto |
+|---|---|---|
+| 1 | **`og-image.png`** | O `index.html` aponta para ele, mas o arquivo não existe. Link compartilhado no WhatsApp/LinkedIn sai **sem imagem** |
+| 2 | **Variável vazia na Vercel** | `VITE_WEBHOOK_CONTATO` está cadastrada **sem valor**. O código já está blindado (ADR-008), mas vale apagar ou preencher — variável vazia parada é armadilha |
+| 3 | **Prints reais do produto** | CRM, dashboard, fluxo do n8n. Deixariam a seção de Engenharia mais forte |
+| 4 | **Erro silencioso no n8n** | O webhook responde 200 **ao receber**, antes de processar. Se o workflow quebrar no meio, o site já disse "enviado" e ninguém é avisado. Ver `integracao-formulario.md` |
+| 5 | **Acesso MCP no workflow** | Desligado. Ligar se quiser que eu ajuste o workflow daqui |
+| 6 | **Logo em SVG** | Hoje é PNG de 232px. Suficiente para o header |
 
 ---
 
@@ -56,10 +50,16 @@ configurações dele. Hoje o n8n responde:
 | 7 | Segurança — CSP e cabeçalhos no `vercel.json` | ✅ |
 | 8 | SEO — robots, sitemap e `llms.txt` | ✅ |
 | 9 | GitHub + Vercel | ✅ |
-| 10 | **Formulário ligado ao n8n** | 🔴 **depende do item acima** |
+| 10 | Formulário ligado ao n8n | ✅ |
+| 11 | **Domínio `omniiabr.tech` apontando para o site novo** | ✅ |
 
 **Verificado em 08/09/2026:** `tsc --noEmit` sem erros · build passando ·
-**75 KB de JS** e **8 KB de CSS** comprimidos · todas as rotas públicas respondendo.
+**75 KB de JS** e **8 KB de CSS** comprimidos · todas as rotas públicas respondendo ·
+domínio servindo o bundle novo com todos os cabeçalhos de segurança.
+
+> 💡 **Como o domínio foi virado:** ele já estava na Vercel, apontando para o projeto
+> antigo. Bastou remover o domínio do projeto antigo e adicionar no novo — sem tocar em
+> DNS. **O projeto antigo continua existindo**: é o plano de rollback. Não apagar.
 
 ---
 
